@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
+import {Router} from '@angular/router';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {IProduct} from '../model/product.model';
-import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-sign-up',
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   loginForm: FormGroup;
 
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   save() {
     const user = this.loginForm.value;
     this.userService
-      .login(user)
+      .signUp(user)
       .subscribe(
         (res: HttpResponse<IProduct>) =>
           this.onProductSaveSuccess(res.body),
@@ -52,5 +52,4 @@ export class LoginComponent implements OnInit {
   private onProductSaveError(res: HttpErrorResponse) {
     console.log(res);
   }
-
 }
