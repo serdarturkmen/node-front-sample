@@ -1,6 +1,16 @@
 <p>
   products works!
 </p>
+
+<a
+  [routerLink]="['/products/add']"
+  routerLinkActive="active"
+  class="btn btn-primary btn-sm"
+>Add Product</a>
+
 <div *ngFor="let prod of products$ | async">
-<span>{{prod.name}}</span>
+  <div class="card">
+    <h5>Name : </h5>{{prod.name}}
+    <h5>Price : </h5>{{prod.price}}
+  </div>
 </div>

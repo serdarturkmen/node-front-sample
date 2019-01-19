@@ -19,7 +19,9 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.products$ = this.productService.findAll()
       .pipe(
-        switchMap(res => res),
+        switchMap(res => {
+          return res.products;
+        }),
         toArray()
       );
   }

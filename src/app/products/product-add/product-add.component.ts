@@ -3,6 +3,7 @@ import {IProduct} from '../../model/product.model';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../services/product.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-add',
@@ -14,7 +15,8 @@ export class ProductAddComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(private productService: ProductService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private router: Router,
   ) {
   }
 
@@ -42,6 +44,7 @@ export class ProductAddComponent implements OnInit {
 
   /*opst saving operation.*/
   private onProductSaveSuccess(result: IProduct) {
+    this.router.navigate(['/products']);
     console.log(result);
   }
 

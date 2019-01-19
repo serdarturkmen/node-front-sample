@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IProduct} from '../model/product.model';
 import {map} from 'rxjs/operators';
+import {IProductArray} from '../model/product-array';
+import {IProduct} from '../model/product.model';
 
-type EntityArrayResponseType = HttpResponse<IProduct[]>;
 type EntityResponseType = HttpResponse<IProduct>;
+type EntityArrayResponseType = HttpResponse<IProductArray>;
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
+    'Content-Type': 'application/json',
     'Authorization': 'my-auth-token'
   })
 };
@@ -25,50 +26,15 @@ export class ProductService {
     this.resourceUrl = 'http://localhost:3000' + this.resourceUrl;
   }
 
-  create(product: IProduct): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(product);
+  create(product: EntityResponseType): Observable<EntityResponseType> {
     return this.http
-      .post<IProduct>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .post<IProduct>(this.resourceUrl, product, {observe: 'response'})
+      .pipe(map((res: EntityResponseType) => res));
   }
 
-  update(product: IProduct): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(product);
+  findAll<T>(): Observable<IProductArray> {
     return this.http
-      .put<IProduct>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .get<IProductArray>(this.resourceUrl, httpOptions);
   }
 
-  findAll<T>(): Observable<IProduct[]> {
-    return this.http
-      .get<IProduct[]>(this.resourceUrl, httpOptions);
-  }
-
-  private convertArrayResponse(
-    res: EntityArrayResponseType
-  ): EntityArrayResponseType {
-    const jsonResponse: IProduct[] = res.body;
-    const body: IProduct[] = [];
-    for (let i = 0; i < jsonResponse.length; i++) {
-      body.push(this.convertItemFromServer(jsonResponse[i]));
-    }
-    return res.clone({ body });
-  }
-
-  /**
-   * Convert a returned JSON object to product.
-   */
-  private convertItemFromServer(product: IProduct): IProduct {
-    const copy: IProduct = Object.assign({}, product);
-    return copy;
-  }
-
-  private convertDateFromClient(product: IProduct): IProduct {
-    const copy: IProduct = Object.assign({}, product, {});
-    return copy;
-  }
-
-  private convertDateFromServer(res: EntityResponseType): EntityResponseType {
-    return res;
-  }
 }
