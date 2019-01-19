@@ -13,7 +13,8 @@ import {UserService} from './services/user.service';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AppState} from './util/app.service';
 import {APP_RESOLVER_PROVIDERS} from './util/app.resolver';
-import {AuthInterceptor} from './services/auth.interceptor';
+import {AuthInterceptor} from './util/auth.interceptor';
+import { HomeComponent } from './home/home.component';
 
 const APP_PROVIDERS = [...APP_RESOLVER_PROVIDERS, AppState];
 
@@ -22,7 +23,8 @@ const APP_PROVIDERS = [...APP_RESOLVER_PROVIDERS, AppState];
     AppComponent,
     ProductsComponent,
     ProductAddComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

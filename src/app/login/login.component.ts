@@ -4,6 +4,7 @@ import {ProductService} from '../services/product.service';
 import {UserService} from '../services/user.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {IProduct} from '../model/product.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private userService: UserService,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              private router: Router
   ) {
   }
 
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
 
   /*opst saving operation.*/
   private onProductSaveSuccess(result: IProduct) {
+    this.router.navigate(['/']);
     console.log(result);
   }
 
