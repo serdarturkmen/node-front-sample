@@ -4,6 +4,7 @@ import {UserService} from '../services/user.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {IProduct} from '../model/product.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,7 +19,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
-              private router: Router
+              private router: Router,
+              private translateService: TranslateService
   ) {
   }
 
@@ -54,6 +56,8 @@ export class RegisterComponent implements OnInit {
   private onProductSaveError(err: any) {
     if (err.status === 500) {
       this.error = err.error.error.name + ' ' + err.error.error.message;
+    } else if (err.status === 409) {
+      this.error = this.translateService.instant(err.error.message);
     }
   }
 }
