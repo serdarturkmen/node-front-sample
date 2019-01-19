@@ -54,6 +54,8 @@ export class LoginComponent implements OnInit {
   private onProductSaveError(err: any) {
     if (err.status === 500) {
       this.error = err.error.error.name + ' ' + err.error.error.message;
+    } else if (err.status === 401) {
+      this.error = err.error.message;
     }
   }
 

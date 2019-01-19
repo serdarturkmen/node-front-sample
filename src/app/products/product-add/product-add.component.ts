@@ -14,6 +14,8 @@ export class ProductAddComponent implements OnInit {
 
   productForm: FormGroup;
 
+  error: any;
+
   constructor(private productService: ProductService,
               private fb: FormBuilder,
               private router: Router,
@@ -48,8 +50,12 @@ export class ProductAddComponent implements OnInit {
     console.log(result);
   }
 
-  private onProductSaveError(res: HttpErrorResponse) {
-    console.log(res);
+  private onProductSaveError(err: HttpErrorResponse) {
+    if (err.status === 500) {
+      this.error = err.error.error.name + ' ' + err.error.error.message;
+    } else if (err.status === 401) {
+      this.error = err.error.message;
+    }
   }
 
 }
