@@ -1,34 +1,39 @@
 <p>
   product-add works!
 </p>
-
-<form
-  [formGroup]="productForm"
-  *ngIf="productForm"
-  (submit)="save()"
->
-  <div class="row">
-    <div class="form-group">
-      <label class="input">
-        <input
-          class="form-control"
-          name="name"
-          formControlName="name"
-          placeholder="Name"
-        />
-      </label>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!(productForm.valid && productForm.valid)"
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-4">
+    <form
+      [formGroup]="productForm"
+      *ngIf="productForm"
+      (submit)="save()"
     >
-      Save
-    </button>
-  </div>
+      <div class="row">
+        <div class="form-group">
+          <label class="input">
+            <input
+              class="form-control"
+              name="name"
+              formControlName="name"
+              placeholder="Name"
+            />
+          </label>
+        </div>
+      </div>
 
-</form>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!(productForm.valid && productForm.valid)"
+        >
+          Save
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
 

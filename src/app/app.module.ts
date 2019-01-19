@@ -15,7 +15,7 @@ import {AppState} from './util/app.service';
 import {APP_RESOLVER_PROVIDERS} from './util/app.resolver';
 import {AuthInterceptor} from './util/auth.interceptor';
 import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './sign-up/register.component';
+import { RegisterComponent } from './register/register.component';
 
 const APP_PROVIDERS = [...APP_RESOLVER_PROVIDERS, AppState];
 
