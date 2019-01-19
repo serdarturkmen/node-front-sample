@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
@@ -13,6 +13,8 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+
+  error: any;
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
@@ -49,8 +51,10 @@ export class LoginComponent implements OnInit {
     console.log(result);
   }
 
-  private onProductSaveError(res: HttpErrorResponse) {
-    console.log(res);
+  private onProductSaveError(err: any) {
+    if (err.status === 500) {
+      this.error = err.error.error.name + ' ' + err.error.error.message;
+    }
   }
 
 }

@@ -14,6 +14,8 @@ export class RegisterComponent implements OnInit {
 
   loginForm: FormGroup;
 
+  error: any;
+
   constructor(private userService: UserService,
               private fb: FormBuilder,
               private router: Router
@@ -49,7 +51,9 @@ export class RegisterComponent implements OnInit {
     console.log(result);
   }
 
-  private onProductSaveError(res: HttpErrorResponse) {
-    console.log(res);
+  private onProductSaveError(err: any) {
+    if (err.status === 500) {
+      this.error = err.error.error.name + ' ' + err.error.error.message;
+    }
   }
 }
