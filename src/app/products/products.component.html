@@ -16,6 +16,9 @@
         <h5>Price : </h5>{{prod.price}}
       </div>
     </div>
+    <div *ngIf="(products$ | async).length < 1">
+      <h5>Error: </h5>{{error}}
+    </div>
 
   </div>
 </div>

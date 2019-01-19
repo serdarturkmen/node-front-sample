@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {IProduct} from '../model/product.model';
-import {switchMap, toArray} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {catchError, switchMap, toArray} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -13,6 +13,8 @@ export class ProductsComponent implements OnInit {
 
   products$: Observable<IProduct[]>;
 
+  error: any;
+
   constructor(private productService: ProductService) {
   }
 
@@ -22,7 +24,13 @@ export class ProductsComponent implements OnInit {
         switchMap(res => {
           return res.products;
         }),
-        toArray()
+        toArray(),
+        catchError(err => {
+          if (err.status === 500) {
+            this.error = err.error.error.name + ' ' + err.error.error.message;
+          }
+          return of([]);
+        })
       );
   }
 
