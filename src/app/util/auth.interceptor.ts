@@ -2,6 +2,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import {Observable} from 'rxjs/internal/Observable';
 import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -14,6 +15,14 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    if (
+      !request ||
+      !request.url ||
+      (/^http/.test(request.url) &&
+        !(environment.url && request.url.startsWith(environment.url)))
+    ) {
+      return next.handle(request);
+    }
 
     const token =
       this.localStorage.retrieve('authenticationToken') ||
