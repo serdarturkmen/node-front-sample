@@ -1,0 +1,4 @@
+sample-front:
+  image: sample-front
+  ports:
+    - 4200:80
