@@ -1,4 +1,8 @@
-sample-front:
-  image: sample-front
-  ports:
-    - 4200:80
+version: '2'
+services:
+  app:
+    container_name: sample-front
+    restart: always
+    build: .
+    ports:
+      - 4200:80
