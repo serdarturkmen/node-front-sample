@@ -15,6 +15,7 @@
         <h5>Name : </h5>{{prod.name}}
         <h5>Price : </h5>{{prod.price}}
       </div>
+      <img src="http://localhost:3000/{{prod.productImage}}"/>
     </div>
     <div *ngIf="(products$ | async)?.length < 1">
       <h5>Error: </h5>{{error}}
