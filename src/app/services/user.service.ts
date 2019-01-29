@@ -6,6 +6,7 @@ import {IUser} from '../model/user.model';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 
 type EntityResponseType = HttpResponse<IUser>;
+declare const FB:any;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,10 +25,33 @@ export class UserService {
   constructor(private http: HttpClient,
               private $localStorage: LocalStorageService,
               private $sessionStorage: SessionStorageService) {
+    FB.init({
+      appId      : '587721945080110',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v1.0'
+    });
     this.resourceUrl = 'http://localhost:3000' + this.resourceUrl;
   }
 
-  login(user: IUser): Observable<EntityResponseType> {
+  fbLogin() {
+    return new Promise((resolve, reject) => {
+      FB.login(result => {
+        if (result.authResponse) {
+          return this.http.post(`http://localhost:3000/facebook/login`, {access_token: result.authResponse.accessToken})
+            .toPromise()
+            .then(response => {
+              console.log(response);
+            })
+            .catch(() => reject());
+        } else {
+          reject();
+        }
+      }, {scope: 'public_profile,email'})
+    });
+  }
+
+  loginNormal(user: IUser): Observable<EntityResponseType> {
     return this.http
       .post<IUser>(`${this.resourceUrl}/login`, user, {observe: 'response'})
       .pipe(map(authenticateSuccess.bind(this)));

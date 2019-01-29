@@ -26,6 +26,14 @@ export class LoginComponent implements OnInit {
     this.initializeForm();
   }
 
+
+  fbLogin() {
+    this.userService.fbLogin().then(() => {
+      console.log('User has been logged in');
+      this.router.navigate(['/dashboard']);
+    });  }
+
+
   initializeForm() {
     this.loginForm = this.fb.group({
       id: new FormControl(''),
@@ -37,7 +45,7 @@ export class LoginComponent implements OnInit {
   save() {
     const user = this.loginForm.value;
     this.userService
-      .login(user)
+      .loginNormal(user)
       .subscribe(
         (res: HttpResponse<IProduct>) =>
           this.onProductSaveSuccess(res.body),
