@@ -35,7 +35,7 @@ export class UserService {
     function authenticateSuccess(resp) {
       const jwt = resp.body.token;
       if (jwt) {
-        this.storeAuthenticationToken(jwt, false);
+        this.storeAuthenticationToken(jwt, user.rememberme);
         return jwt;
       }
     }
