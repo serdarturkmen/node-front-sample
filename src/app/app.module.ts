@@ -18,6 +18,24 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {AuthServiceConfig, FacebookLoginProvider, LoginOpt, SocialLoginModule} from 'angularx-social-login';
+import {FaceLoginComponent} from './face-login/face-login.component';
+
+const fbLoginOptions: LoginOpt = {
+  scope: 'pages_messaging,pages_messaging_subscriptions,email,pages_show_list,manage_pages',
+  return_scopes: true,
+  enable_profile_selector: true
+};
+
+const config = new AuthServiceConfig([
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('587721945080110', fbLoginOptions)
+  }
+]);
+export function provideConfig() {
+  return config;
+}
 
 const APP_PROVIDERS = [...APP_RESOLVER_PROVIDERS, AppState];
 export function createTranslateLoader(http: HttpClient) {
@@ -30,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
     ProductAddComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    FaceLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +57,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    SocialLoginModule,
     NgxWebstorageModule.forRoot({ prefix: 'dating', separator: '-' }),
     TranslateModule.forRoot({
       loader: {
@@ -48,6 +68,10 @@ export function createTranslateLoader(http: HttpClient) {
     }),
   ],
   providers: [ProductService, UserService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
+    },
     APP_PROVIDERS,
     {
       provide: HTTP_INTERCEPTORS,

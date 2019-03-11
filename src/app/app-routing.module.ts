@@ -5,6 +5,7 @@ import {ProductAddComponent} from './products/product-add/product-add.component'
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
 import {RegisterComponent} from './register/register.component';
+import {FaceLoginComponent} from './face-login/face-login.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
@@ -12,7 +13,7 @@ const routes: Routes = [
   {path: 'products/add', pathMatch: 'full', component: ProductAddComponent},
   {path: 'login', pathMatch: 'full', component: LoginComponent},
   {path: 'register', pathMatch: 'full', component: RegisterComponent},
-
+  {path: 'face-login', pathMatch: 'full', component: FaceLoginComponent},
 ];
 
 @NgModule({
