@@ -1,0 +1,13 @@
+<p>
+  users works!
+</p>
+
+<div *ngFor="let user of users">
+  <div class="card">
+    <h5>Email : </h5>{{user.email}}
+    <h5>Id : </h5>{{user.id}}
+    <a class="secondary-content" [routerLink]="['/chat', user.email]" routerLinkActive="router-link-active">
+      <i>chat</i>
+    </a>
+  </div>
+</div>

@@ -49,6 +49,15 @@ export class UserService {
     }
   }
 
+  getToken() {
+    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken')
+  }
+
+
+  getUserByUsername(email): Observable<any> {
+    return this.http.get(this.resourceUrl + '/email/' + email);
+  }
+
   signUp(user: IUser): Observable<EntityResponseType> {
     return this.http
       .post<IUser>(`${this.resourceUrl}/signUp`, user, {observe: 'response'})
@@ -58,6 +67,16 @@ export class UserService {
   findAll<T>(): Observable<IUser[]> {
     return this.http
       .get<IUser[]>(this.resourceUrl, httpOptions);
+  }
+
+  getPayload() {
+    const token = this.getToken();
+    let payload;
+    if (token) {
+      payload = token.split('.')[1];
+      payload = JSON.parse(window.atob(payload));
+    }
+    return payload;
   }
 
 }

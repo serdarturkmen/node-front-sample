@@ -18,6 +18,13 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { UsersComponent } from './users/users.component';
+import { ChatComponent } from './chat/chat/chat.component';
+import { MessageComponent } from './chat/message/message.component';
+import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+import {EmojiPickerModule} from 'ng2-emoji-picker';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 const APP_PROVIDERS = [...APP_RESOLVER_PROVIDERS, AppState];
 export function createTranslateLoader(http: HttpClient) {
@@ -30,7 +37,10 @@ export function createTranslateLoader(http: HttpClient) {
     ProductAddComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    UsersComponent,
+    ChatComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +56,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    EmojiPickerModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   providers: [ProductService, UserService,
     APP_PROVIDERS,
