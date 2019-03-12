@@ -50,7 +50,7 @@ export class UserService {
   }
 
   getToken() {
-    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken')
+    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
   }
 
 
