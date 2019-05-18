@@ -52,10 +52,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCUBfsf6BvjM5-iK7ISJwbZ9XudjrWResg',
-      libraries: ['geometry']
-    }),
+    AgmCoreModule.forRoot(),
     NgxWebstorageModule.forRoot({ prefix: 'dating', separator: '-' }),
     TranslateModule.forRoot({
       loader: {

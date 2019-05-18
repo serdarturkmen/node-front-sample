@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MapsAPILoader} from '@agm/core';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import {Address} from 'ngx-google-places-autocomplete/objects/address';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 declare var google;
@@ -22,7 +22,15 @@ export class MapComponent implements OnInit {
   detailForm: FormGroup;
 
   constructor(private mapsAPILoader: MapsAPILoader,
-              private fb: FormBuilder, ) {
+              private fb: FormBuilder,) {
+  }
+
+  initializeForm() {
+    this.detailForm = this.fb.group({
+      projectPlace: new FormControl(),
+      lat: new FormControl(),
+      lng: new FormControl(),
+    });
   }
 
   getLocations(): Array<{ country: string, city: string, zip_code: number, latitude: number, longitude: number }> {
@@ -39,17 +47,20 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.initializeForm();
     this.markers = this.getLocations(); // original list of markers data
+    this.fillMap();
+  }
 
+  fillMap() {
     this.mapsAPILoader.load().then(() => {
 
       const center = new google.maps.LatLng(this.lat, this.lng);
       // markers located within 50 km distance from center are included
       this.filteredMarkers = this.markers.filter(m => {
-        this.getLocation(m.zip_code + ' ' + m.country);
+        this.getLocationFromAddress(m.zip_code + ' ' + m.country);
 
         const markerLoc = new google.maps.LatLng(m.latitude, m.longitude);
         const distanceInKm = google.maps.geometry.spherical.computeDistanceBetween(markerLoc, center) / 1000;
-        if (distanceInKm < 50.0) {
+        if (distanceInKm < 150.0) {
           this.result.push(m);
           return m;
         }
@@ -59,15 +70,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  initializeForm(){
-    this.detailForm = this.fb.group({
-      projectPlace: new FormControl(),
-      lat: new FormControl(),
-      lng: new FormControl(),
-    });
-  }
-
-  getLocation(address) {
+  getLocationFromAddress(address) {
     const geocoder = new google.maps.Geocoder();
 
     let lat = '';
@@ -95,6 +98,17 @@ export class MapComponent implements OnInit {
     this.detailForm.patchValue({
       lng: address.geometry.location.lng()
     });
+
+    console.log(this.detailForm.value);
+    console.log(address.address_components[0].long_name);
+    this.markers.push({
+      'country': address.address_components[0].long_name,
+      'zip_code': 1234,
+      'city': address.address_components[0].long_name,
+      'latitude': address.geometry.location.lat(),
+      'longitude': address.geometry.location.lng()
+    });
+    this.fillMap();
   }
 
 }
