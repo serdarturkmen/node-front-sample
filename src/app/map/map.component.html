@@ -1,0 +1,39 @@
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+  <agm-marker [latitude]="lat" [longitude]="lng">
+  </agm-marker>
+  <agm-marker *ngFor="let marker of filteredMarkers" [latitude]="marker.latitude" [longitude]="marker.longitude" >
+    <agm-info-window [disableAutoPan]="true">
+      <a routerLink="/">Go there</a>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>
+
+<form [formGroup]="detailForm">
+  <fieldset>
+    <div class="form-group">
+      <div class="row">
+
+        <div class="col-md-6 has-feedback">
+          <label class="control-label">{{ 'Place' | translate }}:</label>
+          <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="icon-prepend fa fa-home"></i>
+                </span>
+            <input
+              type="text"
+              class="form-control"
+              autocomplete="off"
+              ngx-google-places-autocomplete
+              (onAddressChange)="handleAddressChange($event)"
+              formControlName="projectPlace"
+              placeholder="{{'Place' | translate}}"
+            />
+          </div>
+
+        </div>
+
+
+      </div>
+      </div>
+  </fieldset>
+</form>

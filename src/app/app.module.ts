@@ -23,6 +23,9 @@ import { ChatComponent } from './chat/chat/chat.component';
 import { MessageComponent } from './chat/message/message.component';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
 import {EmojiPickerModule} from 'ng2-emoji-picker';
+import {MapComponent} from './map/map.component';
+import {AgmCoreModule} from '@agm/core';
+import {GooglePlaceModule} from 'ngx-google-places-autocomplete';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -40,7 +43,8 @@ export function createTranslateLoader(http: HttpClient) {
     RegisterComponent,
     UsersComponent,
     ChatComponent,
-    MessageComponent
+    MessageComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,10 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCUBfsf6BvjM5-iK7ISJwbZ9XudjrWResg',
+      libraries: ['geometry']
+    }),
     NgxWebstorageModule.forRoot({ prefix: 'dating', separator: '-' }),
     TranslateModule.forRoot({
       loader: {
@@ -56,6 +64,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    GooglePlaceModule,
     EmojiPickerModule.forRoot(),
     SocketIoModule.forRoot(config)
   ],

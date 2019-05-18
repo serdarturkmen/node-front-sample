@@ -7,6 +7,7 @@ import {HomeComponent} from './home/home.component';
 import {RegisterComponent} from './register/register.component';
 import {UsersComponent} from './users/users.component';
 import {ChatComponent} from './chat/chat/chat.component';
+import {MapComponent} from './map/map.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: HomeComponent},
@@ -15,7 +16,9 @@ const routes: Routes = [
   {path: 'login', pathMatch: 'full', component: LoginComponent},
   {path: 'register', pathMatch: 'full', component: RegisterComponent},
   {path: 'users', pathMatch: 'full', component: UsersComponent},
-  {path: 'chat/:email', pathMatch: 'full', component: ChatComponent}
+  {path: 'chat/:email', pathMatch: 'full', component: ChatComponent},
+  {path: 'map', pathMatch: 'full', component: MapComponent},
+
 ];
 
 @NgModule({
