@@ -111,4 +111,8 @@ export class MapComponent implements OnInit {
     this.fillMap();
   }
 
+  getAddressFromCode() {
+    console.log(this.detailForm.controls.projectPlace.value);
+    this.getLocationFromAddress(this.detailForm.controls.projectPlace.value + ' Germany');
+  }
 }
